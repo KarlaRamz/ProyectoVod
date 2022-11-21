@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="img/sakura.png" sizes="any">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <title>Edita el contenido</title>
+    <style type="text/css">
+        #series_info{ display: none;}
+        #pelicula_info{ display: none;}
+        #button_add_serie{ display: none;}
+        #button_add_peli{ display: none;}
+    </style>
+
+</head>
+<body style="background-color: #F1EFF0;"> 
+
+        <!-- funciones -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                let tabla = getParameterByName('tabla');
+                console.log(tabla);
+                if (tabla == 1) {
+                    let serieid = localStorage.getItem("idserie");
+                    console.log(serieid);
+                    $.ajax({
+                        type: "POST",
+                        url: '../backend/mostraredit_serie.php',
+                        data: {
+                            id: serieid
+                        },
+                        success: function (response) {
+                            //if request if made successfully then the response represent the data
+                            var jsonData = JSON.parse(response);
+                            console.log(jsonData);
+
+                            document.getElementById("titulo_cont").value = jsonData['0']['titulo'];
+                            document.getElementById("descripcion_cont").value = jsonData['0']['descripcion'];
+                            document.getElementById("idioma_cont").value = jsonData['0']['idioma'];
+                            document.getElementById("genero_cont").value = jsonData['0']['Genero_id'];
+                            document.getElementById("clasif_cont").value = jsonData['0']['Clasificacion_id'];
+                            document.getElementById("region_cont").value = jsonData['0']['Region_id'];
+                            document.getElementById("temporadas_cont").value = jsonData['0']['numTemporadas'];
+                            document.getElementById("capitulos_cont").value = jsonData['0']['totalCapitulos'];
+                            document.getElementById("img_cont").value = jsonData['0']['rutaPortada'];
+                        }
+                    });
+                }
+                else if (tabla == 2)
+                {
+                    let peliculaid = localStorage.getItem("idpelicula");
+                    console.log(peliculaid);
+                    $.ajax({
+                        type: "POST",
+                        url: '../backend/mostraredit_peli.php',
+                        data: {
+                            id: peliculaid
+                        },
+                        success: function (response) {
+                            //if request if made successfully then the response represent the data
+                            var jsonData = JSON.parse(response);
+                            console.log(jsonData);
+
+                            document.getElementById("titulo_cont").value = jsonData['0']['titulo'];
+                            document.getElementById("descripcion_cont").value = jsonData['0']['descripcion'];
+                            document.getElementById("idioma_cont").value = jsonData['0']['idioma'];
+                            document.getElementById("genero_cont").value = jsonData['0']['Genero_id'];
+                            document.getElementById("clasif_cont").value = jsonData['0']['Clasificacion_id'];
+                            document.getElementById("region_cont").value = jsonData['0']['Region_id'];
+                            document.getElementById("duracion_cont").value = jsonData['0']['duracion'];
+                            document.getElementById("img_cont").value = jsonData['0']['rutaPortada'];
+                        }
+                    });
+                }
+                else
+                {
+
+                }
+            });
+            $("#button_add_peli").click(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: '../backend/editar_peli.php',
+                        data: {
+                            id: '2',
+                            titulo: document.getElementById("titulo_cont").value,
+                            descripcion: document.getElementById("descripcion_cont").value,
+                            idioma: document.getElementById("idioma_cont").value,
+                            genero: document.getElementById("genero_cont").value,
+                            clasificacion: document.getElementById("clasif_cont").value,
+                            region: document.getElementById("region_cont").value,
+                            temporadas: document.getElementById("temporadas_cont").value,
+                            capitulos: document.getElementById("capitulos_cont").value,
+                            duracion: document.getElementById("duracion_cont").value,
+                            rutaPortada: document.getElementById("img_cont").value,
+                            generoId: '1',
+                            clasificacionId: '1',
+                            regionId: '1'
+                        },
+                        success: function (response) {
+                            var jsonData = JSON.parse(response);
+                            //console.log(jsonData);
+                            // user is logged in successfully in the back-end
+                            // let's redirect
+                            if (jsonData.status == 'success') {
+                                alert("Pelicula modificada exitosamente");
+                                // location.href = 'index.html';
+
+                            }
+                            else {
+                                document.getElementById('mensajerror').innerHTML = "Ya existe una pelicula / serie";
+                                alert(jsonData.message);
+                            }
+                        }
+                    });
+                });
+                $("#button_add_serie").click(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: '../backend/editar_serie.php',
+                        data: {
+                            id: '1',
+                            titulo: document.getElementById("titulo_cont").value,
+                            descripcion: document.getElementById("descripcion_cont").value,
+                            idioma: document.getElementById("idioma_cont").value,
+                            genero: document.getElementById("genero_cont").value,
+                            clasificacion: document.getElementById("clasif_cont").value,
+                            region: document.getElementById("region_cont").value,
+                            temporadas: document.getElementById("temporadas_cont").value,
+                            capitulos: document.getElementById("capitulos_cont").value,
+                            duracion: document.getElementById("duracion_cont").value,
+                            rutaPortada: document.getElementById("img_cont").value,
+                            generoId: '1',
+                            clasificacionId: '1',
+                            regionId: '1'
+                        },
+                        success: function (response) {
+                            var jsonData = JSON.parse(response);
+                            //console.log(jsonData);
+                            // user is logged in successfully in the back-end
+                            // let's redirect
+                            if (jsonData.status == 'success') {
+                                alert("Serie modificada exitosamente");
+                                // location.href = 'index.html';
+
+                            }
+                            else {
+                                document.getElementById('mensajerror').innerHTML = "Ya existe una pelicula / serie";
+                                alert(jsonData.message);
+                            }
+                        }
+                    });
+                });
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+    </script>
+    <header>
+        <!-- Barra de navegación -->
+        <nav class="navbar navbar-light d-flex">
+            <div class="d-flex align-items-center">
+                <!-- boton menu -->
+                <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!--edita el perfil-->
+                <h1 class="m-1"><b>Edita el contenido</b></h1>
+            </div>
+
+            <!-- logo -->
+            <a class="float-right navbar-brand m-1" href="index.html">
+                <img src="img/logo.png" alt="logo" style="width:200px;">
+            </a>
+
+            <!-- menu desplegable -->
+            <aside class="collapse navbar-collapse shadow p-4 mb-4 bg-light" id="collapsibleNavbar">
+                <div class="container row mb-2">
+                    <img class="col-sm-1" src="img/profile_icon.png" alt="logo" style="width:70px;">
+                    <p class="col"><b>Nombre perfil</b></p>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin_index.html"><b>Inicio Administrador</b></a>
+                    </li>
+                </ul>
+            </aside>
+        </nav>
+    </header> 
+
+    <div id="editar_contenido" class="container bg-light px-2 py-2 shadow" style="width: 100%;">
+        <form class="was-validated">
+            <!-- tipo de contenido (serie/pelicula)-->
+            <div class="col-sm-4">
+                <label for="tipo_cont"><b>Tipo:</b></label><br>
+                <select class="form-control w-75" id="tipo_cont" onchange="mostrarform()">
+                    <option class="dropdown-item">Tipo</option>
+                    <option value="serie" class="dropdown-item">Serie o programa</option>
+                    <option value="pelicula" class="dropdown-item">Pelicula</option>
+                </select>
+            </div>
+            <br>
+            
+            <div class="custom-control form-group">
+                <!-- titulo -->
+                <div class="d-flex form-inline">
+                    <label for="titulo_cont"><b>Titulo:</b></label>
+                    <input type="text" class="form-control ml-3 w-50" placeholder="Titulo" id="titulo_cont" required>
+                </div>
+                <br>
+                <!-- descripcion -->
+                <div class="d-flex form-group">
+                    <label for="descripcion_cont"><b>Descripción:</b></label>
+                    <textarea rows="3" class="form-control ml-3" placeholder="Ingresa máximo 300 caracteres" id="descripcion_cont" style="width: 45%;" required></textarea>
+                </div>
+                <!-- idioma -->
+                <div class="d-flex form-inline">
+                    <label for="idioma_cont"><b>Idioma de visualización:</b></label>
+                    <input type="text" class="form-control ml-3" placeholder="Idioma" id="idioma_cont" required>
+                </div>
+                <br>
+                <!-- drop boxes -->
+                <div class="form-inline row">
+                    <!-- genero -->
+                    <div class="col-sm-4">
+                        <label class="float-left" for="genero_cont"><b>Género:</b></label><br>
+                        <select class="form-control w-50" id="genero_cont">
+                            <option value="1" class="dropdown-item">Acción</option>
+                            <option value="2" class="dropdown-item">Comedia</option>
+                            <option value="3" class="dropdown-item">Musical</option>
+                            <option value="4" class="dropdown-item">Romance</option>
+                            <option value="5" class="dropdown-item">Drama</option>
+                        </select>
+                    </div>
+                    <!-- clasificacion -->
+                    <div class="col-sm-4">
+                        <label class="float-left" for="clasif_cont"><b>Clasificación de contenido:</b></label><br>
+                        <select class="form-control w-50" id="clasif_cont">
+                            <option value="1" class="dropdown-item">AA - Infantiles</option>
+                            <option value="2" class="dropdown-item">A - Para todo público</option>
+                            <option value="3" class="dropdown-item">B - Adolescentes de 12 años</option>
+                            <option value="4" class="dropdown-item">B15 - Adolescentes mayores a 15 años</option>
+                            <option value="5" class="dropdown-item">C - Adultos mayores a 18 años</option>
+                            <option value="6" class="dropdown-item">D - Adultos. Alto contenido explícito</option>
+                        </select>
+                    </div>
+                    <!-- region -->
+                    <div class="col-sm-4">
+                        <label class="float-left" for="region_cont"><b>Región:</b></label><br>
+                        <select class="form-control w-50" id="region_cont">
+                            <option value="1" class="dropdown-item">Todas las regiones</option>
+                            <option value="2" class="dropdown-item">Canadá, USA y sus territorios</option>
+                            <option value="3" class="dropdown-item">Japón, Europa, Sur África, Oriente Medio y Groenlandia</option>
+                            <option value="4" class="dropdown-item">Sudeste de Asia y Este de Asia</option>
+                            <option value="5" class="dropdown-item">Australia, Nueva Zelanda, las Islas del Pacífico, América Central, México, Sudamérica y el Caribe</option>
+                            <option value="6" class="dropdown-item">Europa del Este, Rusia, el subcontinente Indio, África, Corea del Norte y Mongolia</option>
+                            <option value="7" class="dropdown-item">China</option>
+                            <option value="8" class="dropdown-item">Uso especial no especificado</option>
+                            <option value="9" class="dropdown-item">Medios internacionales para transporte aéreo y oceánico</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <!-- info series -->
+                <div class="row" id="series_info">
+                    <!-- temporadas -->
+                    <div class="d-flex form-inline col-sm-6">
+                        <label for="temporadas_cont"><b>Número de temporadas:</b></label>
+                        <input type="number" class="form-control ml-3" placeholder="no. temporadas" id="temporadas_cont" min="1">
+                    </div>
+                    <br>
+                    <!-- capitulos -->
+                    <div class="d-flex form-inline col-sm-6">
+                        <label for="capitulos_cont"><b>Total de capítulos:</b></label>
+                        <input type="number" class="form-control ml-3" placeholder="total de capitulos" id="capitulos_cont" min="1">
+                    </div>
+                </div>
+                <!-- info pelicula -->
+                <div class="row" id="pelicula_info">
+                    <!-- duracion -->
+                    <div class="d-flex form-inline col-sm-8">
+                        <label for="duracion_cont"><b>Duración de la pelicula (minutos):</b></label>
+                        <input type="number" class="form-control ml-3" placeholder="minutos" id="duracion_cont" min="30">
+                    </div>
+                </div>
+                <br>
+                <!-- ruta img -->
+                <div class="d-flex form-inline">
+                    <label for="img_cont"><b>Ruta de la portada:</b></label>
+                    <input type="text" class="form-control ml-3 w-50" placeholder="/frontend/img/portada/img.png" id="img_cont" required>
+                </div>
+            </div>
+            <br>
+            <!-- botones -->
+            <div class="row d-flex align-items-center form-inline">
+                <div class="form-inline col-sm-10 d-flex float-right">
+                    <a href="admin_index.html"><button type="button" class="btn btn-secondary m-1">Cancelar</button></a>
+                    <button type="button" class="btn btn-success m-1" id="button_add_serie">Guardar Cambios</button>
+                    <button type="button" class="btn btn-success m-1"  id="button_add_peli">Guardar Cambios</button>
+                </div>
+            </div>
+        </form>      
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <!-- Lógica del Frontend -->
+    <script src="funciones.js"></script>
+</body>
+</html>

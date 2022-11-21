@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="img/sakura.png" sizes="any">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Crear Perfil</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <style type="text/css">
+        body{
+            background-image: url("fondo/fondo_crearp.png");
+            background-size: 1325px 740px;
+            }
+        </style>
+    <!-- javascript-->
+    <script>
+        function pictureChange(img) {
+            document.getElementById("icono_seleccionado").src=img;
+        }
+    </script>
+</head>
+<body style="background-color: #F1EFF0;"> 
+    <!-- funciones -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            
+            $('#create_form').submit(function(e) {   
+            e.preventDefault();
+            //console.log($('#edit_form').serialize());
+            console.log(document.getElementById("nombre_perfil").value);
+            console.log(document.getElementById("idioma_vis").value);
+            console.log(document.getElementById("clasificacion_vis").value);
+        
+            var cuenta_id = localStorage.getItem("cuentaId");
+
+            var nombre = document.getElementById("nombre_perfil").value;
+            var idioma = document.getElementById("idioma_vis").value; 
+            var clasificacion = document.getElementById("clasificacion_vis").value;
+            var edad = 22;///Checar
+            var img = document.getElementById("icono_seleccionado");
+            var rutaImagen = img.getAttribute("src");
+            console.log(rutaImagen);
+            $.ajax({
+                type: "POST",
+                url: '../backend/crear_perfil.php',
+                data: { id_cuenta: cuenta_id,
+                        nombre_perfil : nombre,
+                        idioma_perfil: idioma,
+                        clasificacion_perfil: clasificacion,
+                        edad_perfil: edad,
+                        rutaImagen_perfil: rutaImagen 
+                },
+                success: function(response)
+                {
+                    var jsonData = JSON.parse(response);
+                    console.log(jsonData);
+                    if (jsonData.status == 'success')
+                    {
+                        alert("Perfil creado exitosamente");
+                        window.location = 'seleccionar_usuario.html'; 
+                         //location.href = 'index.html';
+                    }
+                    else{    
+                        alert(jsonData.message);
+                    }
+                }
+            });
+            });
+
+        });
+
+    function pictureChange(img) {
+        document.getElementById("icono_seleccionado").src=img;
+    }
+    </script>
+    <header>
+        <!-- Barra de navegación -->
+        <nav class="navbar navbar-light d-flex">
+            <div class="d-flex align-items-center">
+                <!-- boton menu -->
+                <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!--crear el perfil-->
+                <h1 class="m-1"><b>Crear el perfil</b></h1>
+            </div>
+
+            <!-- logo -->
+            <a class="float-right navbar-brand m-1" href="index.html">
+                <img src="img/logo.png" alt="logo" style="width:200px;">
+            </a>
+
+            <!-- menu desplegable -->
+            <aside class="collapse navbar-collapse shadow p-4 mb-4 bg-light" id="collapsibleNavbar">
+                <div class="container row mb-2">
+                    <img class="col-sm-1" src="img/profile_icon.png" alt="logo" style="width:70px;">
+                    <p class="col"><b>Nombre perfil</b></p>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><b>Inicio</b></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Crea el perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="editar_perfil.html">Edita el perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="seleccionar_usuario.html">Perfiles</a>
+                    </li>    
+                </ul>
+            </aside>
+        </nav>
+    </header> 
+    
+    <section class="mx-auto container row">
+        <!-- imagen perfil -->
+        <div class="col-sm-2">
+            <img id="icono_seleccionado" src="img/profile_icon.png" alt="logo" style="width:150px;">
+        </div>
+
+        <!-- form -->
+        <div class="col-sm-10">
+            <form id="create_form" method="post">
+                <!-- form nombre -->
+                <div class="form-group was-validated">
+                    <label for="nombre_perfil"><b>Nombre:</b></label>
+                    <input type="name" class="form-control w-50" placeholder="Nombre del perfil" id="nombre_perfil" value="user_x" required>
+                    <div class="invalid-feedback">El nombre no puede estar vacío</div>
+                </div>
+
+                <!-- cambiar icono -->
+                <div class="form-group">
+
+                    <!-- boton -->
+                    <button type="button" class="btn btn-dark" data-toggle="collapse" data-target="#cambia_icono">Cambiar ícono</button>
+
+
+                    <div id="cambia_icono" class="collapse bg-secondary px-2 py-2" style="width: 75%; height: 250px; overflow-y: scroll;">
+                        <div style="height: 250px;">
+                            <h5 class="m-1"><b>Seleccionar ícono</b></h5>
+                            <div class="d-flex align-items-center m-4">
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/rojo_1.png')"><img class="mx-2" src="img/icons/rojo_1.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/amarillo_1.png')"><img class="mx-2" src="img/icons/amarillo_1.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/verde_1.png')"><img class="mx-2" src="img/icons/verde_1.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/azul_1.png')"><img class="mx-2" src="img/icons/azul_1.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/byn_1.png')"><img class="mx-2" src="img/icons/byn_1.png" alt="logo" style="width:70px;"></button>
+                            </div>
+                            <div class="d-flex align-items-center m-4">
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/rojo_2.png')"><img class="mx-2" src="img/icons/rojo_2.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/amarillo_2.png')"><img class="mx-2" src="img/icons/amarillo_2.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/verde_2.png')"><img class="mx-2" src="img/icons/verde_2.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/azul_2.png')"><img class="mx-2" src="img/icons/azul_2.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/byn_2.png')"><img class="mx-2" src="img/icons/byn_2.png" alt="logo" style="width:70px;"></button>
+                                
+                            </div>
+                            <div class="d-flex align-items-center m-4">
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/rojo_3.png')"><img class="mx-2" src="img/icons/rojo_3.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/amarillo_3.png')"><img class="mx-2" src="img/icons/amarillo_3.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/verde_3.png')"><img class="mx-2" src="img/icons/verde_3.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/azul_3.png')"><img class="mx-2" src="img/icons/azul_3.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/byn_3.png')"><img class="mx-2" src="img/icons/byn_3.png" alt="logo" style="width:70px;"></button>
+                                
+                            </div>
+                            <div class="d-flex align-items-center m-4">
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/rojo_4.png')"><img class="mx-2" src="img/icons/rojo_4.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/amarillo_4.png')"><img class="mx-2" src="img/icons/amarillo_4.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/verde_4.png')"><img class="mx-2" src="img/icons/verde_4.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/azul_4.png')"><img class="mx-2" src="img/icons/azul_4.png" alt="logo" style="width:70px;"></button>
+                                <button type="button" class="btn" onclick="pictureChange('img/icons/byn_4.png')"><img class="mx-2" src="img/icons/byn_4.png" alt="logo" style="width:70px;"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <br>
+
+                <!-- drop boxes -->
+                <div class="form-inline row">
+                    <div class="col-sm-6">
+                        <label class="float-left" for="idioma_vis"><b>Idioma de visualización:</b></label><br>
+                        <select class="form-control w-50" id="idioma_vis">
+                            <option class="dropdown-item">Español</option>
+                            <option class="dropdown-item">Inglés</option>
+                            <option class="dropdown-item">Francés</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="float-left" for="clasif_cont"><b>Clasificación de contenido:</b></label><br>
+                        <select class="form-control w-50" id="clasificacion_vis">
+                            <option class="dropdown-item">AA</option>
+                            <option class="dropdown-item">A</option>
+                            <option class="dropdown-item">B</option>
+                            <option class="dropdown-item">B15</option>
+                            <option class="dropdown-item">C</option>
+                            <option class="dropdown-item">D</option>
+                        </select>
+                    </div>
+                </div>
+
+                <br>
+
+                <!-- botones -->
+                <div class="row d-flex align-items-center">
+                    <div class="form-inline col-sm-4">
+                        <button type="button" class="btn btn-secondary m-1">Cancelar</button>
+                        <button type="submit" class="btn btn-success m-1">Guardar cambios</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</body>
+</html>

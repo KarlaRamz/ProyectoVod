@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="img/sakura.png" sizes="any">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Administración</title>
+
+    <style type="text/css">
+        #series_info{ display: none;}
+        #pelicula_info{ display: none;}
+        #button_add_serie{ display: none;}
+        #button_add_peli{ display: none;}
+    </style>
+
+</head>
+<body style="background-color: #F1EFF0;">
+    <script type="text/javascript">
+        $(document).ready(function() {
+        let cuentaId = localStorage.getItem("cuentaId");
+        $.ajax({
+            type:'POST',
+            url:'../backend/idconsult.php',
+            data: {
+                id:cuentaId
+            },
+            success: function(response){
+                let jsonData = JSON.parse(response);
+                console.log(jsonData);
+                $('#nombre').html(jsonData['usuario']);
+                $('#sesion').html("Cerra Sesion");
+                $('#sesion').attr("href", "login.html");
+                $('#imagen').attr('src', jsonData['rutaImagen']);
+                localStorage.setItem("cuentaId", cuentaId);
+                localStorage.setItem('ID', jsonData['id']);
+            }
+        });
+        });
+    </script>
+    <header>
+        <!-- Barra de navegación -->
+        <nav class="navbar navbar-light d-flex align-items-center">
+            <!-- boton menu -->
+            <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- logo -->
+            <a class="navbar-brand" href="../frontend/index.html">
+                <img src="img/logo.png" alt="logo" style="width:200px;">
+            </a>
+
+            <!-- menu desplegable -->
+            <aside class="collapse navbar-collapse shadow p-4 mb-4 bg-light" id="collapsibleNavbar">
+                <div class="container row mb-2">
+                    <img class="col-sm-1" id="imagen" src="img/profile_icon.png" alt="logo" style="width:70px;">
+                    <p class="col"><b id="nombre">Nombre perfil</b></p>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><b>Inicio</b></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="editar_perfil.html">Edita el perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html" id="sesion">Link</a>
+                    </li>
+                </ul>
+            </aside>
+        </nav>
+    </header>
+    <div class="container mx-auto w-75">
+        <h2><b>Administrar Contenido</b></h2>
+        <br>
+        <form>
+            <div class="form-group mx-auto w-75">
+                <label for="busqueda_admin"><b>Búsqueda por palabras clave:</b></label>
+                <div class="d-flex align-items-center">
+                    <a href="#"><img name="Lupa" src="https://cdn.onlinewebfonts.com/svg/img_56602.png" alt="Buscar" width="32" style="margin: 10px;"></a>
+                    <input type="name" class="form-control w-50" placeholder="Buscar" id="search_tot">
+                </div>
+                <br>
+                <div class="row container form-group">
+                    <div class="col-sm-6">
+                        <label><b>Filtro por clasificación:</b></label><br>
+                        <input type="checkbox" id="todo-publico" name="todo-publico" value="todo-publico">
+                        <label for="todo-publico">Para todo público</label><br>
+                        <input type="checkbox" id="adolescentes" name="adolescentes" value="adolescentes">
+                        <label for="adolescentes">Para adolescentes</label><br>
+                        <input type="checkbox" id="adulto" name="adulto" value="adulto">
+                        <label for="adulto">Contenido adulto</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <label><b>Filtro por contenido:</b></label><br>
+                        <input type="checkbox" id="todo-publico" name="todo-publico" value="todo-publico">
+                        <label for="todo-publico">Series y programas</label><br>
+                        <input type="checkbox" id="adolescentes" name="adolescentes" value="adolescentes">
+                        <label for="adolescentes">Peliculas</label><br>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-block btn-danger w-75" data-toggle="collapse" data-target="#agregar_contenido">Agregar Contenido</button>
+            </div>
+        </form>
+        <br>
+
+        <!-- div con la info para agregar_contenido -->
+        <div id="agregar_contenido" class="collapse bg-light px-2 py-2 shadow" style="width: 100%; height: 250px;">
+            <h5 class="m-1"><b>Agregar contenido</b></h5><br>
+            <form class="was-validated" id="form_add">
+                <!-- tipo de contenido (serie/pelicula)-->
+                <div class="col-sm-4">
+                    <label for="tipo_cont"><b>Tipo:</b></label><br>
+                    <select class="form-control w-75" id="tipo_cont" onchange="mostrarform();">
+                        <option class="dropdown-item">Tipo</option>
+                        <option value="serie" class="dropdown-item">Serie o programa</option>
+                        <option value="pelicula" class="dropdown-item">Pelicula</option>
+                    </select>
+                </div>
+                <br>
+                
+                <div class="custom-control form-group">
+                    <!-- titulo -->
+                    <div class="d-flex form-inline">
+                        <label for="titulo"><b>Titulo:</b></label>
+                        <input type="text" class="form-control ml-3 w-50" placeholder="Titulo" id="titulo" name="titulo" required>
+                    </div>
+                    <br>
+                    <!-- descripcion -->
+                    <div class="d-flex form-group">
+                        <label for="descripcion"><b>Descripción:</b></label>
+                        <textarea rows="3" class="form-control ml-3" placeholder="Ingresa máximo 300 caracteres" id="descripcion" name="descripcion" style="width: 45%;" required maxlength="300"></textarea>
+                    </div>
+                    <!-- idioma -->
+                    <div class="d-flex form-inline">
+                        <label for="idioma_cont"><b>Idioma de visualización:</b></label>
+                        <input type="text" class="form-control ml-3" placeholder="Idioma" id="idioma" name="idioma" required>
+                    </div>
+                    <br>
+                    <!-- drop boxes -->
+                    <div class="form-inline row">
+                        <!-- genero -->
+                        <div class="col-sm-4">
+                            <label class="float-left" for="genero"><b>Género:</b></label><br>
+                            <select class="form-control w-50" id="genero" name="genero">
+                                <option value="1" class="dropdown-item">Acción</option>
+                                <option value="2" class="dropdown-item">Comedia</option>
+                                <option value="3" class="dropdown-item">Musical</option>
+                                <option value="4" class="dropdown-item">Romance</option>
+                                <option value="5" class="dropdown-item">Drama</option>
+                            </select>
+                        </div>
+                        <!-- clasificacion -->
+                        <div class="col-sm-4">
+                            <label class="float-left" for="classi"><b>Clasificación de contenido:</b></label><br>
+                            <select class="form-control w-50" id="classi" name="classi">
+                                <option value="1" class="dropdown-item">AA - Infantiles</option>
+                                <option value="2" class="dropdown-item">A - Para todo público</option>
+                                <option value="3" class="dropdown-item">B - Adolescentes de 12 años</option>
+                                <option value="4" class="dropdown-item">B15 - Adolescentes mayores a 15 años</option>
+                                <option value="5" class="dropdown-item">C - Adultos mayores a 18 años</option>
+                                <option value="6" class="dropdown-item">D - Adultos. Alto contenido explícito</option>
+                            </select>
+                        </div>
+                        <!-- region -->
+                        <div class="col-sm-4">
+                            <label class="float-left" for="region"><b>Región:</b></label><br>
+                            <select class="form-control w-50" id="region" name="region">
+                                <option value="1" class="dropdown-item">Todas las regiones</option>
+                                <option value="2" class="dropdown-item">Canadá, USA y sus territorios</option>
+                                <option value="3" class="dropdown-item">Japón, Europa, Sur África, Oriente Medio y Groenlandia</option>
+                                <option value="4" class="dropdown-item">Sudeste de Asia y Este de Asia</option>
+                                <option value="5" class="dropdown-item">Australia, Nueva Zelanda, las Islas del Pacífico, América Central, México, Sudamérica y el Caribe</option>
+                                <option value="6" class="dropdown-item">Europa del Este, Rusia, el subcontinente Indio, África, Corea del Norte y Mongolia</option>
+                                <option value="7" class="dropdown-item">China</option>
+                                <option value="8" class="dropdown-item">Uso especial no especificado</option>
+                                <option value="9" class="dropdown-item">Medios internacionales para transporte aéreo y oceánico</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <!-- info series -->
+                    <div class="row" id="series_info">
+                        <!-- temporadas -->
+                        <div class="d-flex form-inline col-sm-6">
+                            <label for="numTemp"><b>Número de temporadas:</b></label>
+                            <input type="number" class="form-control ml-3" placeholder="no. temporadas" id="numTemp" name="numTemp" min="1" >
+                        </div>
+                        <br>
+                        <!-- capitulos -->
+                        <div class="d-flex form-inline col-sm-6">
+                            <label for="numCap"><b>Total de capítulos:</b></label>
+                            <input type="number" class="form-control ml-3" placeholder="total de capitulos" id="numCap" name="numCap" min="1" >
+                        </div>
+                    </div>
+                    <!-- info pelicula -->
+                    <div class="row" id="pelicula_info">
+                        <!-- duracion -->
+                        <div class="d-flex form-inline col-sm-8">
+                            <label for="duracion"><b>Duración de la pelicula (minutos):</b></label>
+                            <input type="number" class="form-control ml-3" placeholder="minutos" id="duracion" name="duracion" min="30" >
+                        </div>
+                    </div>
+                    <br>
+                    <!-- ruta img -->
+                    <div class="d-flex form-inline">
+                        <label for="img_cont"><b>Ruta de la portada:</b></label>
+                        <input type="text" class="form-control ml-3 w-50" placeholder="Imagen png" id="img_cont" required value="img/portada/">
+                    </div>
+                </div>
+                <br>
+                <!-- botones -->
+                <div class="row d-flex align-items-center form-inline">
+                    <div class="form-inline col-sm-10 d-flex float-right">
+                        <button type="button" class="btn btn-secondary m-1" data-toggle="collapse" data-target="#agregar_contenido">Cancelar</button>
+                        <button type="button" class="btn btn-success m-1 add-serie" id="button_add_serie">Agregar serie</button>
+                        <button type="button" class="btn btn-success m-1 add-peli" id="button_add_peli">Agregar pelicula</button>
+                    </div>
+                </div>
+            </form>      
+        </div>
+        <br>
+
+        <!-- contenedor con resultados de la busqueda -->
+        <div class="container mx-auto py-3 bg-light my-3" id="product-result_tot">
+            <h4 id="tit_busqueda_tot">Resultados de la búsqueda</h4>
+            <div class="row" id="container_tot">
+            </div>
+        </div>
+        <br>
+
+        <!-- contenedor con todo el contenido -->
+        <div class="containter mx-auto">
+            <h4>Contenido</h4>
+            <section class="container mx-auto py-3 bg-light my-3">
+                <div class="row row-cols-1 row-cols-md-4 g-4" id="contenido_total">
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <!-- Lógica del Frontend -->
+    <script src="funciones.js"></script>
+</body>
+</html>
