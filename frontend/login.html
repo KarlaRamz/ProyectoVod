@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Iniciar Sesión</title>
+    <link rel="icon" href="img/sakura.png" sizes="any">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style type="text/css">
+        ol,
+        ul {
+            list-style-type: none;
+        }
+
+        body {
+            margin: 40px;
+            padding-left: 40px;
+            padding-right: 40px;
+            background-image: url("fondo\\fondo_signup.png");
+            background-size: 1370px 650px;
+        }
+
+        .title {
+            font-weight: bold;
+        }
+
+        div {
+            margin-left: 0px;
+            margin-right: 12px;
+        }
+
+        .crear {
+            padding: 0px 3% 50px;
+        }
+
+        #font {
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+
+        #forma_pago {
+            display: none;
+        }
+
+        #forma_pago2 {
+            display: none;
+        }
+
+        .btn-primary {
+            background-color: #01BCF3;
+            border-color: #24a0ed;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <!-- funciones -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#formularioLogin').submit(function(e) {
+                e.preventDefault();
+                if(validaCorreo() == 0)
+                {
+                    console.log(document.getElementById('user').value);
+                    console.log(document.getElementById('pass').value);
+
+                    var correo = document.getElementById('user').value;
+                    var contraseña = document.getElementById('pass').value;
+                    $.ajax({
+                        type: "POST",
+                        url: '../backend/login.php',
+                        data: {
+                            email : correo,
+                            pass: contraseña
+                        },
+                        success: function(response)
+                        {
+                            var jsonData = JSON.parse(response);
+                            console.log(jsonData);
+                            // user is logged in successfully in the back-end
+                            // let's redirect
+                            if (jsonData.nivel == "0")
+                            {
+                                console.log(jsonData);
+                                 //guardar id de cuenta
+                                localStorage.setItem("cuentaId", jsonData.Cuenta_id);
+                                window.location = 'admin_index.html';
+                            }
+                            else{ 
+                                console.log(jsonData);
+                                 //guardar id de cuenta
+                                localStorage.setItem("cuentaId", jsonData.Cuenta_id);
+                                window.location = 'seleccionar_usuario.html';
+                            }
+                        }
+                    });
+
+                }
+                else{
+                    console.log(document.getElementById('user').value);
+                    console.log(document.getElementById('pass').value);
+
+                    var usuario = document.getElementById('user').value;
+                    var contraseña = document.getElementById('pass').value;
+                    $.ajax({
+                        type: "POST",
+                        url: '../backend/login.php',
+                        data: {
+                            user: usuario,
+                            pass: contraseña
+                        },
+                        success: function(response)
+                        {
+                            //console.log(response);
+                            var jsonData = JSON.parse(response);
+                            console.log(jsonData);
+                            // user is logged in successfully in the back-end
+                            // let's redirect
+                            if (jsonData.nivel == "0")
+                            {
+                                console.log(jsonData);
+                                 //guardar id de cuenta
+                                localStorage.setItem("cuentaId", jsonData.Cuenta_id);
+                                window.location = 'admin_index.html';
+                            }
+                            else{ 
+                                console.log(jsonData);
+                                 //guardar id de cuenta
+                                localStorage.setItem("cuentaId", jsonData.Cuenta_id);
+                                window.location = 'seleccionar_usuario.html';
+                            }
+                        }
+                    });
+                }
+                
+                        
+            });
+        });
+
+
+
+
+        //   ESTA ES LA FUNCION DE EMAIL PERO AL PROBARLA TODOS LOS CORREOS QUE METO NO SON VALIDOS
+        const esCorreoElectronico = correoElectronico => /\S+@\S+/.test(correoElectronico);
+
+        function validaCorreo(){
+            let cadena = document.getElementById('user');
+            if(esCorreoElectronico(cadena.value))            {
+                //console.log('ES CORREO');
+                var btn = document.getElementById("user"); //This selects an element
+                btn.setAttribute("name", "email"); //This set new attributes
+                //btn.setAttribute("enable", " "); //This sets new attributes
+                return 0;
+                
+                //$cadena.setAtributte("name","email");
+            }
+            else
+            {
+                //console.log('ES USUARIO');
+                var btn = document.getElementById("user"); //This selects an element
+                btn.setAttribute("name", "user"); //This set new attributes
+                //btn.setAttribute("enable", " "); //This sets new attributes
+                //$cadena.setAtributte("name","user");
+                return 1;
+            }
+        }
+
+        const validate = () => {
+            const $result = $('#result');
+            const email = $('#email').val();
+            $result.text('');
+
+            if (validateEmail(email)) {
+                $result.text(email + ' is valid :)');
+                $result.css('color', 'green');
+            } else {
+                $result.text(email + ' is not valid :(');
+                $result.css('color', 'red');
+            }
+            return false;
+        }
+
+        function verpassword(password) {
+            if (password.value == '') {
+                alert('Introduce una contraseña');
+            }
+        }
+    </script>
+
+    <div>
+        <h1 align="center"><img src="Logo/logo.png"></h1>
+    </div>
+    <div class="crear">
+        <h1 class="title" align="center">Iniciar Sesión</h1>
+    </div>
+    <div>
+        <!-- formulario -->
+        <form class="row g-3" id="formularioLogin" method="post">
+            <div class="was-validated">
+                <div class="m-0 row justify-content-center" id="font">
+                    <div class="col-md-4">
+                        <label for="form-email" class="form-label">Usuario o email</label>
+                        <!-- <input class="form-control" type="email" name="email" id="form-email" required onblur="veremail(this)"> -->
+                        <input class="form-control" type="text" name="" id="user" required onblur="validaCorreo()">
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback">Introduce un email.</div>
+                        <div>
+                            <h2 id="result"></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-0 row justify-content-center" id="font">
+                    <div class="col-md-4">
+                        <label for="form-password" class="form-label">Contraseña</label>
+                        <!-- <input class="form-control" type="password" name="password" id="form-password" required  minlength="8" onblur="verpassword(this)"> -->
+                        <input class="form-control" type="password" name="pass" id="pass" required>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback">Introduce una contraseña.</div>
+                        <p></p>
+                    </div>
+                </div>
+                <!-- Botones -->
+                <div class="m-0 row justify-content-center" id="font">
+                    <div class="col-md-4" align="center">
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                        <button type="reset" class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+    </div>
+    </form>
+
+    </div>
+</body>
+
+</html>

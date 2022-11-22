@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="img/sakura.png" sizes="any">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>Maowtiku Videoku|Pelicula</title>
+    <style type="text/css">
+        ol, ul { 
+        list-style-type: none;
+        }
+        
+        body{
+            font-family: 'Poppins', sans-serif;
+            background-image: url("fondo/fondo_serie.png");
+            }
+        #aside{
+            width: 270px;
+            height:400px;
+        }
+        #espacio_blanco{
+            width: 830px;
+            height:200px;
+            margin-left: 0px;
+            margin-right: 10px;
+            padding: 20px;
+            border-radius: 2px; 
+        }
+        .title{
+            padding-top: 120px;
+        }
+        #contenedor_info{
+            background-color: #D4E1EC;
+            width: 790px;
+            margin-left: 20px;
+            margin-right: 10px;
+            padding: 20px;
+            border-radius: 2px; 
+            padding-left: 20px;
+            padding-right: 20px;
+            -webkit-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            -moz-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+        }
+        #contenedor_info2{
+            background-color: #F1EFF0;
+            width: 830px;
+            margin-left: 0px;
+            margin-right: 10px;
+            padding: 20px;
+            border-radius: 2px; 
+        }
+        #capitulos{
+            -webkit-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            -moz-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+        }
+        
+        div{
+            margin: 0px;
+            padding: 0px;
+        }
+        .serie{
+            width: 270px;
+            height:400px;
+            
+        }
+        .div-mitad{
+            background-color: gray;
+        }
+        .div-capitulos{
+            margin-top: 20px;
+            background-color: gray;
+        }
+
+        .container2{
+            width: 1400px;
+            height:200px;
+            background-color: black;
+        }
+        #BotonVer{
+            width: 270px;
+            height: 40px;
+            font-size: medium;
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 5px;
+            -webkit-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            -moz-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+        }
+        #BotonFav{
+            width: 270px;
+            height: 40px;
+            font-size: medium;
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 5px;
+            -webkit-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            -moz-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            /* background-color: #F1C40F;
+            border-color: #F1C40F; */
+        }
+        #BotonInfo{
+            width: 270px;
+            height: 40px;
+            font-size: medium;
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 5px;
+            -webkit-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            -moz-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            background-image: linear-gradient(225deg, #ef8a81 0, #ed8182 10%, #ea7783 20%, #e56c85 30%, #df6187 40%, #d85589 50%, #cf4a8c 60%, #c54191 70%, #ba3a96 80%, #ad369d 90%, #9e35a3 100%);; 
+            border-color: white;
+        }
+        #sombra{
+            -webkit-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            -moz-box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+            box-shadow: -3px 3px 16px -6px rgba(0,0,0,0.75);
+        }
+        a {
+            outline: none;
+            text-decoration: none;
+        }
+        </style>
+         <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: #EED8DA;">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).ready(function() {
+    let cuentaId = localStorage.getItem("cuentaId");
+    if(cuentaId!=''){
+    //let cuentaId = localStorage.getItem("cuentaId");
+    let perfilId = localStorage.getItem("perfilId");
+    let perfilImagen = localStorage.getItem("imagenId"); 
+    let perfilNombre = localStorage.getItem("nombreId");
+
+    // console.log(cuentaId);
+    // console.log(perfilId);
+    // console.log(perfilImagen);
+    // console.log(perfilNombre);
+
+    
+    let nombreP = document.getElementById('nombre');
+    let imagenP = document.getElementById('imagen');
+
+    nombreP.innerHTML = perfilNombre;
+    imagenP.setAttribute("src", perfilImagen);
+    
+        //localStorage.setItem("cuentaId", jsonData.Cuenta_id);
+    }
+    else{
+        localStorage.setItem("cuentaId","");
+        localStorage.setItem("perfilId","");
+        localStorage.setItem("imagenId",""); 
+        localStorage.setItem("nombreId","");
+        let cuentaId = localStorage.getItem("cuentaId");
+        let perfilId = localStorage.getItem("perfilId");
+        let perfilImagen = localStorage.getItem("imagenId"); 
+        let perfilNombre = localStorage.getItem("nombreId");
+        // console.log(cuentaId);
+        // console.log(perfilId);
+        // console.log(perfilImagen);
+        // console.log(perfilNombre);
+
+        
+        
+    }
+    });
+            let peliculaID = localStorage.getItem('idpelicula');
+            console.log(peliculaID);
+
+            $('#BotonFav').click(function() {
+                    $.ajax({
+                        type: "POST",
+                        url: '../backend/crearfavoritopeli.php',
+                        data: {pelicula_id: peliculaID
+                        }, //se tiene que obtener el id y cuenta id de la pagina
+                        success: function(response)
+                        {
+                            console.log(peliculaID);
+                            var jsonData = JSON.parse(response);
+                            console.log(jsonData);
+                            // user is logged in successfully in the back-end
+                            // let's redirect
+                            if (jsonData.status == 'success')
+                            {
+                                alert("Agregado a favoritos");
+                                window.location = 'pelicula.html';  //Realmente tiene que regresar a lista de perfiles u potra pagina
+                            }
+                            else{ 
+                                alert("No se pudo agregar a favoritos");
+                            }
+                        }
+                    });
+                });
+
+                $('#BotonVer').click(function() {
+                    $.ajax({
+                        type: "POST",
+                        url: '../backend/consultarecientepeli.php',
+                        data: {pelicula_id: peliculaID
+                        }, //se tiene que obtener el id y cuenta id de la pagina
+                        success: function(response)
+                        {
+                            console.log(peliculaID);
+                            var jsonData = JSON.parse(response);
+                            console.log(jsonData);
+                            // user is logged in successfully in the back-end
+                            // let's redirect
+                            if (jsonData.status == 'success')
+                            {
+    
+                            }
+                            else{ 
+                                alert("No se pudo agregar");
+                            }
+                        }
+                    });
+                });
+
+            $.ajax({
+                type: "POST",
+                url: '../backend/index2.php',
+                data: {
+                    pelicula_id: peliculaID
+                },
+                success: function (response) {
+                    //console.log(response);
+                    let jsonData = JSON.parse(response);
+                    //console.log(jsonData);
+                    $('#titulo').html(jsonData['titulo']);
+                    $('#descripcion').html(jsonData['descripcion']);
+                    $('#img').attr('src', jsonData['rutaPortada']);
+                    $('#duracion').html(jsonData['duracion']);
+                    $('#video').attr('src', jsonData['rutaVideo']);
+                    //$('#cap').attr('src', jsonData['rutaPortada']);
+                    let regionID = jsonData['Region_id'];
+                    let generoID = jsonData['Genero_id'];
+                    let classi_ID = jsonData['Clasificacion_id'];
+                    let peliculaID = jsonData['pelicula_id'];
+                    //console.log(peliculaID);
+                  
+                    $.ajax({
+                        type: "POST",
+                        url: '../backend/classi.php',
+                        data: {
+                            region_id: regionID
+                        },
+                        success: function (response) {
+                            let jsonData = JSON.parse(response);
+                            //console.log(jsonData);
+                            $('#region').html(jsonData['clave']);
+                        }
+                    });
+                    $.ajax({
+                        type: "POST",
+                        url: '../backend/classi.php',
+                        data: {
+                            genero_id: generoID
+                        },
+                        success: function (response) {
+                            //console.log(response);
+                            let jsonData = JSON.parse(response);
+                            //console.log(jsonData);
+                            $('#genero').html(jsonData['nombre']);
+                        }
+                    });
+                    $.ajax({
+                        type: "POST",
+                        url: '../backend/classi.php',
+                        data: {
+                            classi_id: classi_ID
+                        },
+                        success: function (response) {
+                            //let jsonData = JSON.parse(response);
+                            //console.log(jsonData);
+                            $('#clasificacion').html(jsonData['clave']);
+                        }
+                    });
+                    //window.location.href = "serie.html"
+                
+                
+                }
+
+                
+            });
+            
+        });
+
+
+
+        
+    </script>
+
+<header>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-light d-flex align-items-center" style=" background-color:#cf4a8c; padding-bottom: 0px; padding-top: 0px; margin-bottom: 30px;">
+        <!-- boton menu -->
+        <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- logo -->
+        <div align="left">
+        <a class="mx-auto navbar-brand" href="index.html">
+            <img src="img/logo.png" alt="logo" style="width:90px;">
+        </a>
+        </div>
+
+
+        <!-- menu desplegable -->
+        <aside class="collapse navbar-collapse shadow p-4 mb-4 bg-light" id="collapsibleNavbar">
+            <div class="container row mb-2">
+                <img class="col-sm-1" id="imagen" src="img/profile_icon.png" alt="logo" style="width:70px;">
+                <p class="col"><b id="nombre">Nombre perfil</b></p>
+            </div>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html"><b>Inicio</b></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="seleccionar_usuario.html">Perfiles</a>
+                </li>
+            </ul>
+        </aside>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="row">
+
+    <!-- IMAGEN -->
+        <div class="col-md-3">
+            <!-- Aside imagen -->
+            <aside id="aside">
+                <figure id="sombra">
+                    <img  id="img" class="serie" src="img/poster-peliculas/mydressup2.png">
+                </figure>
+            </aside>
+            <!-- ---- -->
+            <aside id="aside">
+                <figure align="center">
+                    <a href="#video"><button type="button" class="btn btn-success" id="BotonVer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+                        </svg>
+                        VER AHORA 
+                    </button></a>
+
+                <!------------------------------------------- Favorito ------------------------------------>
+                    <button type="button" class="btn btn-success" id="BotonFav">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-2">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="logo" style="width:20px;">
+                                </div>
+                                <div class="col-10">
+                                    <label>Agregar a favoritos</label>
+                                </div>
+                            </div>
+                        </div> 
+                    </button>
+                <!------------------------------------------- Duración ------------------------------------>
+                    <div>
+                        <button type="button" class="btn btn-success" id="BotonInfo" disabled>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p>Duración</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p style="font-size: small; padding-top: 3px;" id="duracion"></p>
+                                    </div>
+                                </div>
+                            </div> 
+                        </button>
+                    </div>
+                <!------------------------------------------- Region ------------------------------------>
+                <div>
+                    <button type="button" class="btn btn-success" id="BotonInfo" disabled>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>Region</p>
+                                </div>
+                                <div class="col-6">
+                                    <p style="font-size: small; padding-top: 3px;" id="region">1</p>
+                                </div>
+                            </div>
+                        </div> 
+                    </button>
+                </div>
+                <!------------------------------------------- Genero ------------------------------------>
+                <div>
+                    <button type="button" class="btn btn-success" id="BotonInfo" disabled>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>Genero</p>
+                                </div>
+                                <div class="col-6">
+                                    <p style="font-size: small; padding-top: 3px;" id="genero">1</p>
+                                </div>
+                            </div>
+                        </div> 
+                    </button>
+                </div>
+                <!------------------------------------------- Clasificacion ------------------------------------>
+                <div>
+                    <button type="button" class="btn btn-success" id="BotonInfo" disabled>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>Clasificación</p>
+                                </div>
+                                <div class="col-6">
+                                    <p style="font-size: small; padding-top: 3px;" id="clasificacion">1</p>
+                                </div>
+                            </div>
+                        </div> 
+                    </button>
+                </div>
+
+                </figure>
+            </aside>
+        </div>
+
+    <!-- DESCRIPCION -->
+        <div id="article" class="col-md-9">
+            <article id="espacio_blanco">
+                <h2 class="title" id="titulo">Pelicula</h2>
+            </article>
+            <article id="contenedor_info" class="div-mitad">
+                <div>
+                    <h5 style="font-weight: bolder; font-size: large;">Sinopsis</h5>
+                </div>
+                <div>
+                <p style="text-align: justify; font-size: small;" id="descripcion">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque libero sapiente corrupti cupiditate est? Explicabo maxime rerum minima nulla eveniet nemo impedit in, sed voluptatibus. Totam magnam illo ratione alias!</p>
+                </div>
+            </article>
+            <article id="contenedor_info2" class="div-capitulos">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                                <iframe id="video" width="100%" height="460px" src="https://www.youtube.com/embed/UvIIy7EEfUk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            
+                        </div>
+                    </div>
+                </div> 
+
+            </article>
+        </div>
+
+</div>
+
+</body>
+</html>

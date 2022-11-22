@@ -1,0 +1,293 @@
+<!DOCTYPE html >
+<html>
+
+    <head>
+    <meta charset="utf-8" >
+    <title>Cuenta</title>
+    <link rel="icon" href="img/sakura.png" sizes="any">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style type="text/css">
+    ol, ul { 
+    list-style-type: none;
+    }
+    
+    body{
+        margin: 40px;
+        padding-left: 40px;
+        padding-right: 40px;
+        background-image: url("fondo/fondo_signup.png");
+        background-size: 1325px 900px;
+        }
+
+    .title{
+        font-weight: bold; 
+    }
+    div{
+        margin-left: 0px;
+        margin-right: 12px;
+    }
+
+    .crear{
+        padding:  0px 3% 50px;
+    }
+    #font{
+        font-family: 'Poppins', sans-serif;
+        font-weight: bold; 
+    }
+
+    #forma_pago{
+            display:none;  
+    }
+    #forma_pago2{
+            display:none;  
+    }
+    .btn-primary {
+    background-color: #FDA5C9;
+    border-color: #FDA5C9;
+    font-weight: bold; 
+    color: black; }
+    
+    #mensajerror{
+        color: red;
+
+    }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+
+        <!-- funciones -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#signup_form').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: '../backend/signup.php',
+                    data: {
+                    nombre: document.getElementById("form-nombre").value,
+                    apellidos: document.getElementById("form-apellidos").value,
+                    email: document.getElementById("form-email").value,
+                    pais: document.getElementById("form-pais").value,
+                    usuario: document.getElementById("form-usuario").value,
+                    password: document.getElementById("form-password").value,
+                    suscripcion: document.getElementById("form-suscripcion").value,
+                    tarjeta: document.getElementById("form-tarjeta").value,
+                    pago: document.getElementById("form-pago").value
+                    //$('#signup_form').serialize(),
+                //     console.log(document.getElementById("form-nombre").value);
+                // console.log(document.getElementById("form-apellidos").value);
+                // console.log(document.getElementById("form-email").value);
+                // console.log(document.getElementById("form-pais").value);
+                // console.log(document.getElementById("form-usuario").value);
+                // console.log(document.getElementById("form-password").value);
+                // console.log(document.getElementById("form-suscripcion").value);
+                // console.log(document.getElementById("form-tarjeta").value);
+                // console.log(document.getElementById("form-pago").value);
+                        },
+                    success: function(response)
+                    {
+                        var jsonData = JSON.parse(response);
+                        console.log(jsonData);
+                        // user is logged in successfully in the back-end
+                        // let's redirect
+                        if (jsonData.status == 'success')
+                        {
+                            alert("Cuenta creada exitosamente");
+                            document.getElementById('titulo').innerHTML = "";
+                            document.getElementById('signup_form').innerHTML = "";
+                            // location.href = 'index.html';
+                            var count = 5;
+                            setInterval(function(){
+                                count--;
+                                document.getElementById('titulo').innerHTML = "<h1>Cuenta creada exitosamente... Redirigiendote a la pagina principal...</h1>";
+                                document.getElementById('signup_form').innerHTML = '<h1 align="center">' + count + "</h1>";
+                                if (count == 0) 
+                                {
+                                    window.location = 'index.html'; 
+                                }
+                            },1000);
+                        }
+                        else{ 
+                                document.getElementById('mensajerror').innerHTML = "Ya existe una cuenta con este email, ingresa uno diferente";
+                                alert(jsonData.message);
+                        }
+                    }
+                });
+            });
+        });
+
+
+        function vernombre(nombre) {
+            if (nombre.value == ''){
+                alert('Introduce un nombre');
+            }
+        }
+
+        function verapellidos(apellidos) {
+            if (apellidos.value == '') {
+                alert('Introduce tus apellidos');
+            }
+        }
+//  ESTA ES LA FUNCION DE EMAIL PERO AL PROBARLA TODOS LOS CORREOS QUE METO NO SON VALIDOS 
+        // function veremail(email) {
+        // var expReg= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+        // if (!expReg.test(email)){
+        //     alert("La dirección de email no es correcta.");
+        //     return false;
+        // } 
+        // }
+/////////////////////////////////////////////////////////////////////////////////////////
+        function verpais(pais) {
+            if (pais.value == '') {
+                alert('Introduce tu pais');
+            }
+        }
+
+        function verusuario(usuario) {
+            if (usuario.value == '') {
+                alert('Introduce un usuario');
+            }
+        }
+
+        function verpassword(password) {
+            if (password.value == '') {
+                alert('Introduce una contraseña');
+            }
+        }
+
+
+        function vertarjeta(tarjeta) {
+            parseInt(tarjeta);
+            if (tarjeta.value == '') {
+                alert('Introduce un numero de tarjeta');
+            }
+            else if (tarjeta.lenght > 16) {
+                alert('El modelo debe tener 16 caracteres');
+            }
+        }   
+
+        function versuscripcion() {
+            let form = document.getElementById('form-suscripcion');
+            if(form.value == 'premium'){
+            document.getElementById('forma_pago').style.display = 'block';
+            document.getElementById('forma_pago2').style.display = 'block';
+            }
+            else{
+                document.getElementById('forma_pago').style.display = 'none';
+                document.getElementById('forma_pago2').style.display = 'none';
+            }
+        }
+
+    </script>
+
+    <div><h1 align="center"><img src="Logo/logo.png"></h1></div>
+    <div class="crear"><h1 class="title" align="center" id="titulo">Crear Cuenta</h1></div>
+    <div>
+        <!-- formulario -->
+    <form  class="row g-3" id="signup_form" method="post"> <!--action="../backend/signup.php"-->
+        <div class="was-validated">
+        <div class="m-0 row justify-content-center" id="font">
+
+            <div class="col-md-4">
+                <label for="form-nombre" class="form-label">Nombre</label>
+                <input class="form-control" type="text" name="nombre" id="form-nombre" required  minlength="3" maxlength="25" onblur="vernombre(this)" >
+                <div class="valid-feedback"></div>
+                <div class="invalid-feedback">Introduce un nombre.</div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="form-apellidos" class="form-label">Apellidos</label>
+                <input class="form-control" type="text" name="apellidos" id="form-apellidos" required  minlength="10" onblur="verapellidos(this)" >
+                <div class="valid-feedback"></div>
+                <div class="invalid-feedback">Introduce tus apellidos.</div>
+            </div>
+    
+            <div class="col-md-4">
+                <label for="form-email" class="form-label">Email</label>
+                <input class="form-control" type="email" name="email" id="form-email" required >
+                <div class="valid-feedback"></div>
+                <div class="invalid-feedback">Introduce un email.</div>
+                <label id="mensajerror"></label>
+            </div>
+
+            <div class="col-md-4">
+                <label for="form-pais" class="form-label">País</label>
+                <input class="form-control" type="text" name="pais" id="form-pais" required  minlength="3" onblur="verpais(this)" >
+                <div class="valid-feedback"></div>
+                <div class="invalid-feedback">Introduce un país.</div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="form-usuario" class="form-label">Usuario</label>
+                <input class="form-control" type="text" name="usuario" id="form-usuario" required  minlength="3" onblur="verusuario(this)">
+                <div class="valid-feedback"></div>
+                <div class="invalid-feedback">Introduce un nombre de usuario.</div>
+                <p>&nbsp</p>
+            </div>
+
+            <div class="col-md-4">
+                <label for="form-password" class="form-label">Contraseña</label>
+                <input class="form-control" type="password" name="password" id="form-password" required  minlength="8" onblur="verpassword(this)">
+                <div class="valid-feedback"></div>
+                <div class="invalid-feedback">Introduce una contraseña.</div>
+                <p>&nbsp</p>    
+            </div>
+
+            <div class="col-md-4">
+                <label for="form-suscripcion" class="form-label" name="suscripcion">Suscripción</label>
+                <select id="form-suscripcion" class="form-select" name="suscripcion" onchange="versuscripcion();">
+                <option value="free">Free</option>
+                <option value="familiar">Familiar</option>
+                <option value="premium">Premium</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+            </div>
+
+            
+            <div class="col-md-4" id="forma_pago">
+                <label for="form-tarjeta" class="form-label">Tarjeta</label>
+                <input class="form-control" type="text" name="tarjeta" id="form-tarjeta" minlength="16" maxlength="16" onblur="vertarjeta(this)">
+                <div class="valid-feedback"></div>
+                <div class="invalid-feedback">Introduce un numero de tarjeta.</div>
+            </div>
+
+            <div class="col-md-4" id="forma_pago2">
+                <label for="form-pago" class="form-label">Periodo de Pago</label>
+                <select id="form-pago" class="form-select" name="pago">
+                <option>Mensual</option>
+                <option>Anual</option>
+                </select>
+            </div>
+            
+            
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+            </div>
+    
+    <!-- Botones -->
+            <div class="col-md-4" align="right">
+                <p>&nbsp</p>
+                <button type="submit" class="btn btn-primary" >Iniciar Sesión</button>
+                <button type="reset" class="btn btn-secondary">Cancelar</button>
+            </div>
+
+        </div> 
+        </div>
+    </div>
+    </form>
+
+    </div>
+    </body>
+</html>

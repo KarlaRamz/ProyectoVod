@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="img/sakura.png" sizes="any">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+    <title>Maowtiku Videoku</title>
+    <style type="text/css">
+
+        body{
+            background-image: url("fondo/fondo_index.png");
+        }
+        .slider {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            margin:auto;
+            overflow: hidden;
+        }
+        .slider ul {
+            display: flex;
+            padding: 0;
+            width: 400%;
+            animation: cambio 20s infinite;
+            animation-direction: alternate;
+        }
+
+        .slider li {
+            width: 100%;
+            list-style:none;
+        }
+
+        .slider img {
+        width: 100%;
+        height: 100%;
+        }
+
+        @keyframes cambio {
+        0% {margin-left: 0;}
+        20% {margin-left: 0;}
+
+        25% {margin-left: -100%;}
+        45% {margin-left: -100%;}
+
+        50% {margin-left: -200%;}
+        70% {margin-left: -200%;}
+
+        75% {margin-left: -300%;}
+        100% {margin-left: -300%;}
+        }
+        h3{
+            padding-top: 5px;
+            padding-bottom: 5px;
+            color: white;
+        }
+        #titulo{
+            background-image: linear-gradient(225deg, #ef8a81 0, #ed8182 10%, #ea7783 20%, #e56c85 30%, #df6187 40%, #d85589 50%, #cf4a8c 60%, #c54191 70%, #ba3a96 80%, #ad369d 90%, #9e35a3 100%);; 
+        }
+        #titulo2{
+            background-color: #ccac00; 
+        }
+        #siteFooter{
+            clear: both;
+            background-image: linear-gradient(225deg, #ef8a81 0, #ed8182 10%, #ea7783 20%, #e56c85 30%, #df6187 40%, #d85589 50%, #cf4a8c 60%, #c54191 70%, #ba3a96 80%, #ad369d 90%, #9e35a3 100%);; 
+            text-align: center;
+            padding: 20px;
+        }   
+        #menu2{
+            background-image: linear-gradient(225deg, #ef8a81 0, #ed8182 10%, #ea7783 20%, #e56c85 30%, #df6187 40%, #d85589 50%, #cf4a8c 60%, #c54191 70%, #ba3a96 80%, #ad369d 90%, #9e35a3 100%);; 
+            padding: 5px 15px;
+            text-align: center;
+        }
+        #menu2 li{
+            display: inline-block;
+            list-style: none;
+            padding: 5px;
+            font-family: 'Arial';
+            color: white;
+        }
+
+        #footer{
+            color: white;
+        }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+   
+</head>
+<body style="background-color: #F1EFF0;">
+  <script>
+    $(document).ready(function() {
+    let cuentaId = localStorage.getItem("cuentaId");
+    if(cuentaId!=''){
+    //let cuentaId = localStorage.getItem("cuentaId");
+    let perfilId = localStorage.getItem("perfilId");
+    let perfilImagen = localStorage.getItem("imagenId"); 
+    let perfilNombre = localStorage.getItem("nombreId");
+
+    // console.log(cuentaId);
+    // console.log(perfilId);
+    // console.log(perfilImagen);
+    // console.log(perfilNombre);
+
+    
+    let nombreP = document.getElementById('nombre');
+    let imagenP = document.getElementById('imagen');
+
+    nombreP.innerHTML = perfilNombre;
+    imagenP.setAttribute("src", perfilImagen);
+    
+        //localStorage.setItem("cuentaId", jsonData.Cuenta_id);
+    }
+    else{
+        localStorage.setItem("cuentaId","");
+        localStorage.setItem("perfilId","");
+        localStorage.setItem("imagenId",""); 
+        localStorage.setItem("nombreId","");
+        let cuentaId = localStorage.getItem("cuentaId");
+        let perfilId = localStorage.getItem("perfilId");
+        let perfilImagen = localStorage.getItem("imagenId"); 
+        let perfilNombre = localStorage.getItem("nombreId");
+        // console.log(cuentaId);
+        // console.log(perfilId);
+        // console.log(perfilImagen);
+        // console.log(perfilNombre);
+
+        
+        
+    }
+    });
+</script>
+    <header>
+        <!-- Barra de navegación -->
+        <nav class="navbar navbar-light d-flex align-items-center" style="padding-bottom: 0px; padding-top: 0px; background-color:#cf4a8c;">
+            <!-- boton menu -->
+            <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- logo -->
+            <a class="" href="#" >
+                <img src="img/logo.png" alt="logo" style="width:90px; margin-left: 850px;">
+            </a>
+            <!-- barra busqueda -->
+            <div class="d-flex align-items-center">
+                <form class="busqueda me-3">
+                    <input id="search" name="search" type="search" class="form-control" placeholder="Buscar" aria-label="Search">
+                </form>
+                <a href="#"><img name="Lupa" src="https://cdn.onlinewebfonts.com/svg/img_56602.png" alt="Buscar" width="32" style="margin: 10px;"></a>
+            </div>
+            <!-- menu desplegable -->
+            <aside class="collapse navbar-collapse shadow p-4 mb-4 bg-light" id="collapsibleNavbar">
+                <div class="container row mb-2">
+                    <img class="col-sm-1" id="imagen" src="img/profile_icon.png"  alt="logo" style="width:70px;">
+                    <p class="col"><b id="nombre">Nombre perfil</b></p>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><b>Inicio</b></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="seleccionar_usuario.html">Cambiar perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html" id="sesion">Iniciar Sesion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="crear_perfil.html">Crear Cuenta</a>
+                    </li>
+                </ul>
+            </aside>
+        </nav>
+    </header>  
+    <header>
+
+    <!-- container busqueda -->
+    <div class="container mx-auto py-3 bg-light my-3" id="product-result">
+        <h4 id="tit_busqueda">Resultados de la búsqueda</h4>
+        <div class="row" id="container">
+        </div>
+    </div>
+          <!-- SLIDER -->
+        <div id="popular" style="margin-bottom: 0px;">
+            <div class="slider">
+            <ul>
+                <li><img src="img/slider/slider2.jpg" class="d-block w-100">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>Fall 2022 Anime Rankings Week 05 </h5>
+                  <p>The fifth weekly Anime Corner poll for Fall 2022 anime rankings is now closed!</p>
+                </div></li>
+                <li><img src="img/slider/slider1.jpg"alt="" class="d-block w-100" ></li>
+                <li><img src="img/slider/slider3.jpg"alt="" class="d-block w-100" ></li>
+                <li><img src="img/slider/slider4.png"alt="" class="d-block w-100" ></li>
+            </ul>  
+            </div>   
+        </div>
+
+    <!-- contenido favoritos -->
+    <section  id="titulo2" style="margin-top: 0%;">
+        <h3 align="center">Favoritos</h3>
+    </section>
+
+    <section class="container mx-auto py-3 bg-light my-3">
+        <div class="row row-cols-1 row-cols-md-5 g-4" id="contenido_favoritos">
+        </div>
+    </section>
+
+        <!-- contenido favoritos -->
+        <section  id="titulo" style="margin-top: 0%;">
+            <h3 align="center">Ultimos Vistos</h3>
+        </section>
+    
+        <section class="container mx-auto py-3 bg-light my-3">
+            <div class="row row-cols-1 row-cols-md-5 g-4" id="contenido_reciente">
+            </div>
+        </section>
+    
+
+    <!-- contenido series -->
+    <section  id="titulo" style="margin-top: 0%;">
+        <h3 align="center">Series</h3>
+    </section>
+
+    <section class="container mx-auto py-3 bg-light my-3">
+        <div class="row row-cols-1 row-cols-md-5 g-4" id="contenido_series">
+        </div>
+    </section>
+
+    <!-- contenido pelis -->
+    <section  id="titulo">
+        <h3 align="center">Películas</h3>
+    </section>
+
+    <section class="container mx-auto py-3 bg-light my-3">
+        <div class="row row-cols-1 row-cols-md-5 g-4" id="contenido_pelis">
+            <div class="col">
+            </div>
+        </div>
+    </section>
+
+
+        <!-- FOOTER -->
+        <footer id="siteFooter">
+
+            <div class="fot">
+                <p> </p>
+                <nav id="menu2">
+            <ul>
+                <li><a href="http://www.facebook.com" target ="_blank"><img class="fotte" src="img/SocialMedia/facebook.png" alt=""></a></li>
+                <li><a href="http://www.instagram.com" target ="_blank"><img class="fotte" src="img/SocialMedia/instagram.png" alt=""></a></li>
+                <li><a href="http://www.twitch.tv" target ="_blank"><img class="fotte" src="img/SocialMedia/twitch.png" alt=""></a></li>
+                <li><a href="http://www.spotify.com" target ="_blank"><img class="fotte" src="img/SocialMedia/spotify.png" alt=""></a></li>
+            </ul>
+
+            <span id="footer">www.MaowtikuVideoku.com y el logotipo de Maowtiku Videoku son marcas registradas. </span>
+            <br>
+            <span id="footer">Derechos Reservados &copy; Buscatodo.com S de R.L. de C.V.</span> 
+                </nav>
+            </div>
+            </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <!-- Lógica del Frontend -->
+    <script src="funciones.js"></script>
+</body>
+</html>
